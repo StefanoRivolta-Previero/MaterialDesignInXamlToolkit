@@ -1,65 +1,62 @@
-﻿using Shouldly;
-using Xunit;
-
-namespace MaterialDesignColors.Wpf.Fixture;
+﻿namespace MaterialDesignColors.Wpf.Tests;
 
 public class ResourceProviderFixture
 {
-    [Fact]
-    public void ExcludesBlack()
+    [Test]
+    public async Task ExcludesBlack()
     {
-        var swatchesProvider = new SwatchesProvider();
+        SwatchesProvider swatchesProvider = new ();
 
-        var containsBlack = swatchesProvider.Swatches.Any(
+        bool containsBlack = swatchesProvider.Swatches.Any(
             swatch => string.Compare(swatch.Name, "Black", StringComparison.InvariantCultureIgnoreCase) == 0);
 
-        containsBlack.ShouldBe(false);
+        await Assert.That(containsBlack).IsFalse();
     }
 
-    [Fact]
-    public void IncludesGrey()
+    [Test]
+    public async Task IncludesGrey()
     {
-        var swatchesProvider = new SwatchesProvider();
+        SwatchesProvider swatchesProvider = new ();
 
-        var containsBlack = swatchesProvider.Swatches.Any(
+        bool containsBlack = swatchesProvider.Swatches.Any(
             swatch => string.Compare(swatch.Name, "Grey", StringComparison.InvariantCultureIgnoreCase) == 0);
 
-        containsBlack.ShouldBe(true);
+        await Assert.That(containsBlack).IsTrue();
     }
 
-    [Fact]
-    public void BrownHasNoSecondary()
+    [Test]
+    public async Task BrownHasNoSecondary()
     {
-        var swatchesProvider = new SwatchesProvider();
+        SwatchesProvider swatchesProvider = new ();
 
         var brownSwatch = swatchesProvider.Swatches.Single(
             swatch => swatch.Name == "brown");
 
-        brownSwatch.SecondaryHues.ShouldNotBeNull();
-        brownSwatch.SecondaryHues.Count().ShouldBe(0);
+        await Assert.That(brownSwatch.SecondaryHues).IsNotNull();
+        await Assert.That(brownSwatch.SecondaryHues.Count).IsEqualTo(0);
     }
 
-    [Fact]
-    public void BrownHasPrimaries()
+    [Test]
+    public async Task BrownHasPrimaries()
     {
-        var swatchesProvider = new SwatchesProvider();
+        SwatchesProvider swatchesProvider = new ();
 
         var brownSwatch = swatchesProvider.Swatches.Single(
             swatch => swatch.Name == "brown");
 
-        brownSwatch.PrimaryHues.ShouldNotBeNull();
-        brownSwatch.PrimaryHues.Count().ShouldBe(10);
+        await Assert.That(brownSwatch.PrimaryHues).IsNotNull();
+        await Assert.That(brownSwatch.PrimaryHues.Count).IsEqualTo(10);
     }
 
-    [Fact]
-    public void IndigoHasSecondaries()
+    [Test]
+    public async Task IndigoHasSecondaries()
     {
-        var swatchesProvider = new SwatchesProvider();
+        SwatchesProvider swatchesProvider = new ();
 
         var brownSwatch = swatchesProvider.Swatches.Single(
             swatch => swatch.Name == "indigo");
 
-        brownSwatch.SecondaryHues.ShouldNotBeNull();
-        brownSwatch.SecondaryHues.Count().ShouldBe(4);
+        await Assert.That(brownSwatch.SecondaryHues).IsNotNull();
+        await Assert.That(brownSwatch.SecondaryHues.Count).IsEqualTo(4);
     }
 }

@@ -68,7 +68,7 @@
                     <materialDesign:PackIcon Margin="3"
                                              Background="Transparent"
                                              Cursor="Hand"
-                                             Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                                             Foreground="{DynamicResource MaterialDesign.Brush.Primary.Dark}"
                                              Kind="Xml"
                                              ToolTip="View XAML">
                       <materialDesign:PackIcon.Style>
@@ -101,7 +101,7 @@
                 <Grid>
                   <AdornerDecorator>
                     <Border Margin="-5"
-                            BorderBrush="{DynamicResource SecondaryHueMidBrush}"
+                            BorderBrush="{DynamicResource MaterialDesign.Brush.Secondary}"
                             Opacity=".4">
                       <Border.Style>
                         <Style TargetType="Border">
@@ -124,6 +124,21 @@
         <Setter Property="VerticalContentAlignment" Value="Bottom" />
         <Setter Property="materialDesignDemo:XamlDisplayEx.ButtonDock" Value="Right" />
       </Style>
+
+      <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline5TextBlock}" x:Key="PageTitleTextBlock">
+        <Setter Property="Margin" Value="0 0 0 24"/>
+      </Style>
+
+      <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignHeadline6TextBlock}" x:Key="PageSectionTitleTextBlock">
+        <Setter Property="Margin" Value="0 0 0 16"/>
+      </Style>
+
+      <Style TargetType="Rectangle" x:Key="PageSectionSeparator">
+        <Setter Property="Margin" Value="0,24" />
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Fill" Value="{DynamicResource MaterialDesign.Brush.TextBox.HoverBackground}" />
+      </Style>
+      
     </ResourceDictionary>
   </Application.Resources>
 </Application>

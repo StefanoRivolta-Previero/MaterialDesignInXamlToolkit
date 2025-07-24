@@ -5,9 +5,6 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf">
 
-  <converters:MathConverter x:Key="DivisionMathConverter" Operation="Divide" />
-  <converters:PointValueConverter x:Key="PointValueConverter" />
-
   <Style x:Key="FocusVisual">
     <Setter Property="Control.Template">
       <Setter.Value>
@@ -144,14 +141,14 @@
                                 ContentTemplate="{TemplateBinding ContentTemplate}"
                                 FlowDirection="LeftToRight" />
               <Grid.Clip>
-                <EllipseGeometry RadiusX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width, Converter={StaticResource DivisionMathConverter}, ConverterParameter=2.0}" RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height, Converter={StaticResource DivisionMathConverter}, ConverterParameter=2.0}">
+                <EllipseGeometry RadiusX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width, Converter={x:Static converters:MathConverter.DivideInstance}, ConverterParameter=2.0}" RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height, Converter={x:Static converters:MathConverter.DivideInstance}, ConverterParameter=2.0}">
                   <EllipseGeometry.Center>
-                    <MultiBinding Converter="{StaticResource PointValueConverter}">
-                      <Binding Converter="{StaticResource DivisionMathConverter}"
+                    <MultiBinding Converter="{x:Static converters:PointValueConverter.Instance}">
+                      <Binding Converter="{x:Static converters:MathConverter.DivideInstance}"
                                ConverterParameter="2.0"
                                Path="Width"
                                RelativeSource="{RelativeSource TemplatedParent}" />
-                      <Binding Converter="{StaticResource DivisionMathConverter}"
+                      <Binding Converter="{x:Static converters:MathConverter.DivideInstance}"
                                ConverterParameter="2.0"
                                Path="Height"
                                RelativeSource="{RelativeSource TemplatedParent}" />
@@ -172,14 +169,14 @@
                                 ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ToggleButtonAssist.OnContentTemplate)}"
                                 FlowDirection="LeftToRight" />
               <Grid.Clip>
-                <EllipseGeometry RadiusX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width, Converter={StaticResource DivisionMathConverter}, ConverterParameter=2.0}" RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height, Converter={StaticResource DivisionMathConverter}, ConverterParameter=2.0}">
+                <EllipseGeometry RadiusX="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width, Converter={x:Static converters:MathConverter.DivideInstance}, ConverterParameter=2.0}" RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height, Converter={x:Static converters:MathConverter.DivideInstance}, ConverterParameter=2.0}">
                   <EllipseGeometry.Center>
-                    <MultiBinding Converter="{StaticResource PointValueConverter}">
-                      <Binding Converter="{StaticResource DivisionMathConverter}"
+                    <MultiBinding Converter="{x:Static converters:PointValueConverter.Instance}">
+                      <Binding Converter="{x:Static converters:MathConverter.DivideInstance}"
                                ConverterParameter="2.0"
                                Path="Width"
                                RelativeSource="{RelativeSource TemplatedParent}" />
-                      <Binding Converter="{StaticResource DivisionMathConverter}"
+                      <Binding Converter="{x:Static converters:MathConverter.DivideInstance}"
                                ConverterParameter="2.0"
                                Path="Height"
                                RelativeSource="{RelativeSource TemplatedParent}" />
@@ -334,7 +331,7 @@
             </Trigger>
             <!-- TODO
 						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="BorderBrush" TargetName="normal" Value="{Binding (Custom:ControlsHelper.FocusBorderBrush), RelativeSource={RelativeSource TemplatedParent}}"/>
+							<Setter Property="BorderBrush" TargetName="normal" Value="{Binding (Custom:ControlsHelper.FocusBorderBrush), RelativeSource={RelativeSource TemplatedParent}}" />
 						</Trigger>
 						-->
           </ControlTemplate.Triggers>
@@ -402,10 +399,12 @@
                                  Duration="0" />
                 <DoubleAnimation Storyboard.TargetName="Thumb"
                                  Storyboard.TargetProperty="Width"
+                                 From="0"
                                  To="{Binding Tag, ElementName=SwitchGrid}"
                                  Duration="0" />
                 <DoubleAnimation Storyboard.TargetName="Thumb"
                                  Storyboard.TargetProperty="Height"
+                                 From="0"
                                  To="{Binding Tag, ElementName=SwitchGrid}"
                                  Duration="0" />
               </Storyboard>
@@ -654,7 +653,7 @@
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
-    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
+    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), FallbackValue=Black}" />
     <Setter Property="Height" Value="37" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="Padding" Value="1" />

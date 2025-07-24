@@ -4,8 +4,10 @@ using System.Windows.Media;
 
 namespace MaterialDesignThemes.Wpf.Converters;
 
-internal class RemoveAlphaBrushConverter : IValueConverter, IMultiValueConverter
+public class RemoveAlphaBrushConverter : IValueConverter, IMultiValueConverter
 {
+    public static readonly RemoveAlphaBrushConverter Instance = new();
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         => value is SolidColorBrush brush
             ? new SolidColorBrush(RgbaToRgb(brush.Color, parameter))
@@ -25,8 +27,8 @@ internal class RemoveAlphaBrushConverter : IValueConverter, IMultiValueConverter
             _ => Colors.White
         };
 
-        var alpha = (double)rgba.A / byte.MaxValue;
-        var alphaReverse = 1 - alpha;
+        double alpha = (double)rgba.A / byte.MaxValue;
+        double alphaReverse = 1 - alpha;
 
         return Color.FromRgb(
             (byte)(alpha * rgba.R + alphaReverse * backgroundColor.R),

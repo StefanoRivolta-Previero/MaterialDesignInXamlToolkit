@@ -9,10 +9,6 @@
     <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
-  <converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter" />
-  <converters:MathMultipleConverter x:Key="MathMultipleConverter" Operation="Multiply" />
-  <converters:SnackbarActionButtonPlacementModeConverter x:Key="SnackbarActionButtonPlacementModeConverter" />
-
   <Style x:Key="MaterialDesignSnackbarActionButton" TargetType="Button">
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderBrush" Value="Transparent" />
@@ -92,18 +88,18 @@
                     ContentStringFormat="{TemplateBinding ActionContentStringFormat}"
                     ContentTemplate="{TemplateBinding ActionContentTemplate}"
                     ContentTemplateSelector="{TemplateBinding ActionContentTemplateSelector}"
-                    Style="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type wpf:Snackbar}}, Path=ActionButtonStyle}"
-                    Visibility="{TemplateBinding ActionContent, Converter={StaticResource NullableToVisibilityConverter}}">
+                    Style="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type wpf:Snackbar}}, Path=ActionButtonStyle, FallbackValue={x:Null}}"
+                    Visibility="{TemplateBinding ActionContent, Converter={x:Static converters:NullableToVisibilityConverter.CollapsedInstance}}">
               <DockPanel.Dock>
-                <MultiBinding Converter="{StaticResource SnackbarActionButtonPlacementModeConverter}">
-                  <Binding Path="ActionButtonPlacement" RelativeSource="{RelativeSource AncestorType={x:Type wpf:Snackbar}}" />
-                  <Binding Path="(wpf:SnackbarMessage.InlineActionButtonMaxHeight)" RelativeSource="{RelativeSource AncestorType={x:Type wpf:Snackbar}}" />
-                  <Binding Path="ActualHeight" RelativeSource="{RelativeSource AncestorType={x:Type wpf:Snackbar}}" />
+                <MultiBinding Converter="{x:Static converters:SnackbarActionButtonPlacementModeConverter.Instance}">
+                  <Binding Path="ActionButtonPlacement" RelativeSource="{RelativeSource AncestorType={x:Type wpf:Snackbar}}" FallbackValue="Auto" />
+                  <Binding Path="(wpf:SnackbarMessage.InlineActionButtonMaxHeight)" RelativeSource="{RelativeSource AncestorType={x:Type wpf:Snackbar}}" FallbackValue="55" />
+                  <Binding Path="ActualHeight" RelativeSource="{RelativeSource AncestorType={x:Type wpf:Snackbar}}" FallbackValue="0" />
                 </MultiBinding>
               </DockPanel.Dock>
             </Button>
 
-            <ContentPresenter MaxHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type wpf:Snackbar}}, Path=(wpf:SnackbarMessage.ContentMaxHeight)}"
+            <ContentPresenter MaxHeight="{Binding RelativeSource={RelativeSource AncestorType={x:Type wpf:Snackbar}}, Path=(wpf:SnackbarMessage.ContentMaxHeight), FallbackValue=36}"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               Content="{TemplateBinding Content}"
                               ContentStringFormat="{TemplateBinding ContentStringFormat}"
@@ -114,8 +110,8 @@
                   <TextBlock Padding="0" Text="{Binding}">
                     <TextBlock.Style>
                       <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
-                        <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type wpf:Snackbar}}, Path=FontSize}" />
-                        <Setter Property="FontWeight" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type wpf:Snackbar}}, Path=FontWeight}" />
+                        <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type wpf:Snackbar}}, Path=FontSize, FallbackValue=16}" />
+                        <Setter Property="FontWeight" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type wpf:Snackbar}}, Path=FontWeight, FallbackValue=Regular}" />
                         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
                         <Setter Property="TextWrapping" Value="WrapWithOverflow" />
                       </Style>
@@ -186,7 +182,7 @@
               <system:Double>0.0</system:Double>
             </StackPanel.Tag>
             <StackPanel.Height>
-              <MultiBinding Converter="{StaticResource MathMultipleConverter}">
+              <MultiBinding Converter="{x:Static converters:MathMultipleConverter.MultiplyInstance}">
                 <Binding ElementName="ContentBorder" Path="ActualHeight" />
                 <Binding Path="Tag" RelativeSource="{RelativeSource Self}" />
               </MultiBinding>
@@ -227,5 +223,4 @@
       </Trigger>
     </Style.Triggers>
   </Style>
-
 </ResourceDictionary>

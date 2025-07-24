@@ -7,11 +7,6 @@
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
-    <ResourceDictionary>
-      <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-      <converters:BorderClipConverter x:Key="BorderClipConverter" />
-      <converters:BrushOpacityConverter x:Key="BrushOpacityConverter" />
-    </ResourceDictionary>
   </ResourceDictionary.MergedDictionaries>
 
   <Style x:Key="FocusVisual">
@@ -57,7 +52,7 @@
                         CornerRadius="{Binding Path=(wpf:ButtonAssist.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}"
                         Effect="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ElevationAssist.Elevation), Converter={x:Static converters:ShadowConverter.Instance}}" />
                 <ProgressBar x:Name="ProgressBar"
-                             Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}, Path=ActualWidth}"
+                             Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}, Path=ActualWidth, FallbackValue={x:Static system:Double.NaN}}"
                              Height="{TemplateBinding Height}"
                              HorizontalAlignment="Left"
                              VerticalAlignment="Center"
@@ -69,14 +64,14 @@
                              Minimum="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.Minimum)}"
                              Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.Opacity)}"
                              Style="{DynamicResource MaterialDesignLinearProgressBar}"
-                             Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.IsIndicatorVisible), Converter={StaticResource BooleanToVisibilityConverter}}"
+                             Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.IsIndicatorVisible), Converter={x:Static converters:BooleanToVisibilityConverter.CollapsedInstance}}"
                              Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.Value)}">
                   <ProgressBar.Clip>
-                    <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                      <Binding ElementName="border" Path="ActualWidth" />
-                      <Binding ElementName="border" Path="ActualHeight" />
-                      <Binding ElementName="border" Path="CornerRadius" />
-                      <Binding ElementName="border" Path="BorderThickness" />
+                    <MultiBinding Converter="{x:Static converters:BorderClipConverter.Instance}">
+                      <Binding Source="{x:Reference border}" Path="ActualWidth" />
+                      <Binding Source="{x:Reference border}" Path="ActualHeight" />
+                      <Binding Source="{x:Reference border}" Path="CornerRadius" />
+                      <Binding Source="{x:Reference border}" Path="BorderThickness" />
                     </MultiBinding>
                   </ProgressBar.Clip>
                 </ProgressBar>
@@ -91,11 +86,11 @@
                         Focusable="False"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
               <wpf:Ripple.Clip>
-                <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                  <Binding ElementName="border" Path="ActualWidth" />
-                  <Binding ElementName="border" Path="ActualHeight" />
-                  <Binding ElementName="border" Path="CornerRadius" />
-                  <Binding ElementName="border" Path="BorderThickness" />
+                <MultiBinding Converter="{x:Static converters:BorderClipConverter.Instance}">
+                  <Binding Source="{x:Reference border}" Path="ActualWidth" />
+                  <Binding Source="{x:Reference border}" Path="ActualHeight" />
+                  <Binding Source="{x:Reference border}" Path="CornerRadius" />
+                  <Binding Source="{x:Reference border}" Path="BorderThickness" />
                 </MultiBinding>
               </wpf:Ripple.Clip>
             </wpf:Ripple>
@@ -188,7 +183,7 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     CornerRadius="{Binding Path=(wpf:ButtonAssist.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
             <ProgressBar x:Name="ProgressBar"
-                         Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}, Path=ActualWidth}"
+                         Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}, Path=ActualWidth, FallbackValue={x:Static system:Double.NaN}}"
                          Height="{TemplateBinding Height}"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Center"
@@ -200,14 +195,14 @@
                          Minimum="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.Minimum)}"
                          Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.Opacity)}"
                          Style="{DynamicResource MaterialDesignLinearProgressBar}"
-                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.IsIndicatorVisible), Converter={StaticResource BooleanToVisibilityConverter}}"
+                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.IsIndicatorVisible), Converter={x:Static converters:BooleanToVisibilityConverter.CollapsedInstance}}"
                          Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.Value)}">
               <ProgressBar.Clip>
-                <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                  <Binding ElementName="border" Path="ActualWidth" />
-                  <Binding ElementName="border" Path="ActualHeight" />
-                  <Binding ElementName="border" Path="CornerRadius" />
-                  <Binding ElementName="border" Path="BorderThickness" />
+                <MultiBinding Converter="{x:Static converters:BorderClipConverter.Instance}">
+                  <Binding Source="{x:Reference border}" Path="ActualWidth" />
+                  <Binding Source="{x:Reference border}" Path="ActualHeight" />
+                  <Binding Source="{x:Reference border}" Path="CornerRadius" />
+                  <Binding Source="{x:Reference border}" Path="BorderThickness" />
                 </MultiBinding>
               </ProgressBar.Clip>
             </ProgressBar>
@@ -221,18 +216,18 @@
                         Focusable="False"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
               <wpf:Ripple.Clip>
-                <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                  <Binding ElementName="border" Path="ActualWidth" />
-                  <Binding ElementName="border" Path="ActualHeight" />
-                  <Binding ElementName="border" Path="CornerRadius" />
-                  <Binding ElementName="border" Path="BorderThickness" />
+                <MultiBinding Converter="{x:Static converters:BorderClipConverter.Instance}">
+                  <Binding Source="{x:Reference border}" Path="ActualWidth" />
+                  <Binding Source="{x:Reference border}" Path="ActualHeight" />
+                  <Binding Source="{x:Reference border}" Path="CornerRadius" />
+                  <Binding Source="{x:Reference border}" Path="BorderThickness" />
                 </MultiBinding>
               </wpf:Ripple.Clip>
             </wpf:Ripple>
           </Grid>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
-              <Setter TargetName="border" Property="Background" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BrushOpacityConverter}, ConverterParameter=0.16}" />
+              <Setter TargetName="border" Property="Background" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static converters:BrushOpacityConverter.Instance}, ConverterParameter=0.16}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
               <Setter Property="Opacity" Value="0.38" />
@@ -346,7 +341,7 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     CornerRadius="{Binding Path=(wpf:ButtonAssist.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}" />
             <ProgressBar x:Name="ProgressBar"
-                         Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}, Path=ActualWidth}"
+                         Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ButtonBase}}, Path=ActualWidth, FallbackValue={x:Static system:Double.NaN}}"
                          Height="{TemplateBinding Height}"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Center"
@@ -358,14 +353,14 @@
                          Minimum="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.Minimum)}"
                          Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.Opacity)}"
                          Style="{DynamicResource MaterialDesignLinearProgressBar}"
-                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.IsIndicatorVisible), Converter={StaticResource BooleanToVisibilityConverter}}"
+                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.IsIndicatorVisible), Converter={x:Static converters:BooleanToVisibilityConverter.CollapsedInstance}}"
                          Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.Value)}">
               <ProgressBar.Clip>
-                <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                  <Binding ElementName="border" Path="ActualWidth" />
-                  <Binding ElementName="border" Path="ActualHeight" />
-                  <Binding ElementName="border" Path="CornerRadius" />
-                  <Binding ElementName="border" Path="BorderThickness" />
+                <MultiBinding Converter="{x:Static converters:BorderClipConverter.Instance}">
+                  <Binding Source="{x:Reference border}" Path="ActualWidth" />
+                  <Binding Source="{x:Reference border}" Path="ActualHeight" />
+                  <Binding Source="{x:Reference border}" Path="CornerRadius" />
+                  <Binding Source="{x:Reference border}" Path="BorderThickness" />
                 </MultiBinding>
               </ProgressBar.Clip>
             </ProgressBar>
@@ -379,19 +374,18 @@
                         Focusable="False"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
               <wpf:Ripple.Clip>
-                <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                  <Binding ElementName="border" Path="ActualWidth" />
-                  <Binding ElementName="border" Path="ActualHeight" />
-                  <Binding ElementName="border" Path="CornerRadius" />
-                  <Binding ElementName="border" Path="BorderThickness" />
+                <MultiBinding Converter="{x:Static converters:BorderClipConverter.Instance}">
+                  <Binding Source="{x:Reference border}" Path="ActualWidth" />
+                  <Binding Source="{x:Reference border}" Path="ActualHeight" />
+                  <Binding Source="{x:Reference border}" Path="CornerRadius" />
+                  <Binding Source="{x:Reference border}" Path="BorderThickness" />
                 </MultiBinding>
               </wpf:Ripple.Clip>
             </wpf:Ripple>
           </Grid>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
-              <Setter TargetName="border" Property="Background" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BrushOpacityConverter}, ConverterParameter=0.16}" />
-
+              <Setter TargetName="border" Property="Background" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static converters:BrushOpacityConverter.Instance}, ConverterParameter=0.16}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
               <Setter Property="Opacity" Value="0.38" />
@@ -479,8 +473,8 @@
   <Style x:Key="MaterialDesignToolForegroundButton"
          TargetType="{x:Type ButtonBase}"
          BasedOn="{StaticResource MaterialDesignToolButton}">
-    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
-    <Setter Property="wpf:RippleAssist.Feedback" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
+    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), FallbackValue=Black}" />
+    <Setter Property="wpf:RippleAssist.Feedback" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), FallbackValue=Black}" />
   </Style>
 
   <!--#endregion-->
@@ -521,7 +515,7 @@
                          Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.Opacity)}"
                          RenderTransformOrigin=".5, .5"
                          Style="{DynamicResource MaterialDesignCircularProgressBar}"
-                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.IsIndicatorVisible), Converter={StaticResource BooleanToVisibilityConverter}}"
+                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.IsIndicatorVisible), Converter={x:Static converters:BooleanToVisibilityConverter.CollapsedInstance}}"
                          Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:ButtonProgressAssist.Value)}">
               <ProgressBar.RenderTransform>
                 <TransformGroup>
@@ -765,8 +759,8 @@
   <Style x:Key="MaterialDesignIconForegroundButton"
          TargetType="{x:Type ButtonBase}"
          BasedOn="{StaticResource MaterialDesignIconButton}">
-    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
-    <Setter Property="wpf:RippleAssist.Feedback" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
+    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), FallbackValue=Black}" />
+    <Setter Property="wpf:RippleAssist.Feedback" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), FallbackValue=Black}" />
   </Style>
 
   <!--#endregion-->
@@ -807,11 +801,11 @@
                         Focusable="False"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
               <wpf:Ripple.Clip>
-                <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                  <Binding ElementName="border" Path="ActualWidth" />
-                  <Binding ElementName="border" Path="ActualHeight" />
-                  <Binding ElementName="border" Path="CornerRadius" />
-                  <Binding ElementName="border" Path="BorderThickness" />
+                <MultiBinding Converter="{x:Static converters:BorderClipConverter.Instance}">
+                  <Binding Source="{x:Reference border}" Path="ActualWidth" />
+                  <Binding Source="{x:Reference border}" Path="ActualHeight" />
+                  <Binding Source="{x:Reference border}" Path="CornerRadius" />
+                  <Binding Source="{x:Reference border}" Path="BorderThickness" />
                 </MultiBinding>
               </wpf:Ripple.Clip>
             </wpf:Ripple>
@@ -819,7 +813,7 @@
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
               <Setter TargetName="background" Property="wpf:ShadowAssist.Darken" Value="True" />
-              <Setter TargetName="border" Property="Background" Value="{Binding BorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BrushOpacityConverter}, ConverterParameter=0.16}" />
+              <Setter TargetName="border" Property="Background" Value="{Binding BorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={x:Static converters:BrushOpacityConverter.Instance}, ConverterParameter=0.16}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
               <Setter Property="Opacity" Value="0.38" />
@@ -869,5 +863,4 @@
   </Style>
 
   <!--#endregion-->
-
 </ResourceDictionary>

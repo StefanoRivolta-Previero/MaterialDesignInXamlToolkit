@@ -8,9 +8,6 @@
     <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ValidationErrorTemplate.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
-  <converters:BrushRoundConverter x:Key="BrushRoundConverter" />
-  <converters:IsDarkConverter x:Key="IsDarkConverter" />
-
   <Style x:Key="FocusVisual">
     <Setter Property="Control.Template">
       <Setter.Value>
@@ -66,13 +63,12 @@
     <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Secondary.Foreground}" />
   </Style>
 
-
   <Style x:Key="MaterialDesignCheckBox" TargetType="{x:Type CheckBox}">
     <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
     <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
-    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
+    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), FallbackValue=Black}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type CheckBox}">
@@ -207,7 +203,7 @@
   <Style x:Key="MaterialDesignUserForegroundCheckBox" TargetType="{x:Type CheckBox}">
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
-    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
+    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground), FallbackValue=Black}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type CheckBox}">
@@ -242,8 +238,8 @@
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Viewbox Width="18"
-                     Height="18"
+            <Viewbox Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:CheckBoxAssist.CheckBoxSize)}"
+                     Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:CheckBoxAssist.CheckBoxSize)}"
                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                      FlowDirection="LeftToRight">
               <Canvas Width="24" Height="24">
@@ -310,7 +306,7 @@
     <Setter Property="VerticalContentAlignment" Value="Center" />
   </Style>
 
-  <Style x:Key="MaterialDesignFilterChipCheckBox" TargetType="CheckBox">
+  <Style x:Key="MaterialDesignFilterChipCheckBox" TargetType="ToggleButton">
     <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Foreground}" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Cursor" Value="Hand" />
@@ -323,7 +319,7 @@
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
-        <ControlTemplate TargetType="{x:Type CheckBox}">
+        <ControlTemplate TargetType="{x:Type ToggleButton}">
           <ControlTemplate.Resources>
             <Style TargetType="{x:Type wpf:PackIcon}">
               <Setter Property="FrameworkElement.Height" Value="22" />
@@ -438,7 +434,7 @@
             <Border x:Name="MouseOverBorder"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
-                    Background="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}"
+                    Background="{TemplateBinding Foreground, Converter={x:Static converters:BrushRoundConverter.Instance}}"
                     CornerRadius="16"
                     Opacity="0" />
             <Border x:Name="SelectedBackgroundBorder"
@@ -480,7 +476,7 @@
     </Setter>
   </Style>
 
-  <Style x:Key="MaterialDesignFilterChipOutlineCheckBox" TargetType="CheckBox">
+  <Style x:Key="MaterialDesignFilterChipOutlineCheckBox" TargetType="ToggleButton">
     <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.ForegroundLight}" />
     <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesign.Brush.Foreground}" />
     <Setter Property="BorderThickness" Value="1" />
@@ -494,7 +490,7 @@
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
-        <ControlTemplate TargetType="{x:Type CheckBox}">
+        <ControlTemplate TargetType="{x:Type ToggleButton}">
           <ControlTemplate.Resources>
             <Style TargetType="{x:Type wpf:PackIcon}">
               <Setter Property="FrameworkElement.Height" Value="22" />
@@ -627,7 +623,7 @@
             <Border x:Name="MouseOverBorder"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
-                    Background="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}"
+                    Background="{TemplateBinding Foreground, Converter={x:Static converters:BrushRoundConverter.Instance}}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     CornerRadius="16"
@@ -674,7 +670,7 @@
   </Style>
 
   <Style x:Key="MaterialDesignFilterChipPrimaryCheckBox"
-         TargetType="CheckBox"
+         TargetType="ToggleButton"
          BasedOn="{StaticResource MaterialDesignFilterChipCheckBox}">
     <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Primary.Light}" />
     <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Primary.Dark}" />
@@ -683,7 +679,7 @@
     <Style.Triggers>
       <MultiDataTrigger>
         <MultiDataTrigger.Conditions>
-          <Condition Binding="{Binding Path=(wpf:ThemeAssist.TriggerBrush), RelativeSource={RelativeSource Self}, Converter={StaticResource IsDarkConverter}}" Value="True" />
+          <Condition Binding="{Binding Path=(wpf:ThemeAssist.TriggerBrush), RelativeSource={RelativeSource Self}, Converter={x:Static converters:IsDarkConverter.Instance}}" Value="True" />
           <Condition Binding="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Value="True" />
         </MultiDataTrigger.Conditions>
         <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Primary.Dark}" />
@@ -693,7 +689,7 @@
   </Style>
 
   <Style x:Key="MaterialDesignFilterChipSecondaryCheckBox"
-         TargetType="CheckBox"
+         TargetType="ToggleButton"
          BasedOn="{StaticResource MaterialDesignFilterChipCheckBox}">
     <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Secondary.Light}" />
     <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Secondary.Dark}" />
@@ -702,7 +698,7 @@
     <Style.Triggers>
       <MultiDataTrigger>
         <MultiDataTrigger.Conditions>
-          <Condition Binding="{Binding Path=(wpf:ThemeAssist.TriggerBrush), RelativeSource={RelativeSource Self}, Converter={StaticResource IsDarkConverter}}" Value="True" />
+          <Condition Binding="{Binding Path=(wpf:ThemeAssist.TriggerBrush), RelativeSource={RelativeSource Self}, Converter={x:Static converters:IsDarkConverter.Instance}}" Value="True" />
           <Condition Binding="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Value="True" />
         </MultiDataTrigger.Conditions>
         <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Secondary.Dark}" />
@@ -712,7 +708,7 @@
   </Style>
 
   <Style x:Key="MaterialDesignFilterChipPrimaryOutlineCheckBox"
-         TargetType="CheckBox"
+         TargetType="ToggleButton"
          BasedOn="{StaticResource MaterialDesignFilterChipOutlineCheckBox}">
     <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Primary.Light}" />
     <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
@@ -722,7 +718,7 @@
     <Style.Triggers>
       <MultiDataTrigger>
         <MultiDataTrigger.Conditions>
-          <Condition Binding="{Binding Path=(wpf:ThemeAssist.TriggerBrush), RelativeSource={RelativeSource Self}, Converter={StaticResource IsDarkConverter}}" Value="True" />
+          <Condition Binding="{Binding Path=(wpf:ThemeAssist.TriggerBrush), RelativeSource={RelativeSource Self}, Converter={x:Static converters:IsDarkConverter.Instance}}" Value="True" />
           <Condition Binding="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Value="True" />
         </MultiDataTrigger.Conditions>
         <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Primary.Dark}" />
@@ -732,7 +728,7 @@
   </Style>
 
   <Style x:Key="MaterialDesignFilterChipSecondaryOutlineCheckBox"
-         TargetType="CheckBox"
+         TargetType="ToggleButton"
          BasedOn="{StaticResource MaterialDesignFilterChipOutlineCheckBox}">
     <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Secondary.Light}" />
     <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesign.Brush.Secondary}" />
@@ -742,7 +738,7 @@
     <Style.Triggers>
       <MultiDataTrigger>
         <MultiDataTrigger.Conditions>
-          <Condition Binding="{Binding Path=(wpf:ThemeAssist.TriggerBrush), RelativeSource={RelativeSource Self}, Converter={StaticResource IsDarkConverter}}" Value="True" />
+          <Condition Binding="{Binding Path=(wpf:ThemeAssist.TriggerBrush), RelativeSource={RelativeSource Self}, Converter={x:Static converters:IsDarkConverter.Instance}}" Value="True" />
           <Condition Binding="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Value="True" />
         </MultiDataTrigger.Conditions>
         <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Secondary.Dark}" />

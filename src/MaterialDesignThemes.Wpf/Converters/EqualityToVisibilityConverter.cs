@@ -5,6 +5,8 @@ namespace MaterialDesignThemes.Wpf.Converters;
 
 public class EqualityToVisibilityConverter : IValueConverter
 {
+    public static readonly EqualityToVisibilityConverter Instance = new();
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value != null && value.Equals(parameter)) return Visibility.Visible;
@@ -13,7 +15,5 @@ public class EqualityToVisibilityConverter : IValueConverter
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
+        => throw new NotImplementedException();
 }

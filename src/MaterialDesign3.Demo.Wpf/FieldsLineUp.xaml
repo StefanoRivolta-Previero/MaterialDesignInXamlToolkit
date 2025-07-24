@@ -10,8 +10,8 @@
   <GroupBox Margin="10"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            materialDesign:ColorZoneAssist.Background="{DynamicResource PrimaryHueLightBrush}"
-            materialDesign:ColorZoneAssist.Foreground="{DynamicResource PrimaryHueLightForegroundBrush}"
+            materialDesign:ColorZoneAssist.Background="{DynamicResource MaterialDesign.Brush.Primary.Light}"
+            materialDesign:ColorZoneAssist.Foreground="{DynamicResource MaterialDesign.Brush.Primary.Light.Foreground}"
             materialDesign:ColorZoneAssist.Mode="Custom">
     <GroupBox.Header>
       <StackPanel Orientation="Horizontal">
@@ -97,6 +97,7 @@
           <CheckBox x:Name="IsEnabledCheckBox"
                     Content="IsEnabled"
                     IsChecked="True" />
+          <CheckBox x:Name="IsReadOnlyCheckBox" Content="TextBox.IsReadOnly" />
           <CheckBox x:Name="HasClearButtonCheckBox" Content="TextFieldAssist.HasClearButton" />
           <CheckBox x:Name="IsEditableCheckBox" Content="ComboBox.IsEditable" />
         </StackPanel>
@@ -147,6 +148,8 @@
           <ColumnDefinition MinWidth="100" />
           <ColumnDefinition MinWidth="100" />
           <ColumnDefinition MinWidth="100" />
+          <ColumnDefinition MinWidth="100" />
+          <ColumnDefinition MinWidth="100" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="1"
@@ -186,6 +189,14 @@
                    Grid.Column="5"
                    Style="{StaticResource FieldHeader}"
                    Text="TimePicker" />
+        <TextBlock Grid.Row="0"
+                   Grid.Column="6"
+                   Style="{StaticResource FieldHeader}"
+                   Text="NumericUpDown" />
+        <TextBlock Grid.Row="0"
+                   Grid.Column="7"
+                   Style="{StaticResource FieldHeader}"
+                   Text="AutoSuggestBox " />
 
         <TextBox Grid.Row="1" Grid.Column="1" />
         <TextBox Grid.Row="2"
@@ -241,6 +252,28 @@
         <materialDesign:TimePicker Grid.Row="4"
                                    Grid.Column="5"
                                    Style="{StaticResource MaterialDesignOutlinedTimePicker}" />
+
+        <materialDesign:NumericUpDown Grid.Row="1" Grid.Column="6" />
+        <materialDesign:NumericUpDown Grid.Row="2"
+                                      Grid.Column="6"
+                                      Style="{StaticResource MaterialDesignFloatingHintNumericUpDown}" />
+        <materialDesign:NumericUpDown Grid.Row="3"
+                                      Grid.Column="6"
+                                      Style="{StaticResource MaterialDesignFilledNumericUpDown}" />
+        <materialDesign:NumericUpDown Grid.Row="4"
+                                      Grid.Column="6"
+                                      Style="{StaticResource MaterialDesignOutlinedNumericUpDown}" />
+
+        <materialDesign:AutoSuggestBox Grid.Row="1" Grid.Column="7" />
+        <materialDesign:AutoSuggestBox Grid.Row="2"
+                                       Grid.Column="7"
+                                       Style="{StaticResource MaterialDesignFloatingHintAutoSuggestBox}" />
+        <materialDesign:AutoSuggestBox Grid.Row="3"
+                                       Grid.Column="7"
+                                       Style="{StaticResource MaterialDesignFilledAutoSuggestBox}" />
+        <materialDesign:AutoSuggestBox Grid.Row="4"
+                                       Grid.Column="7"
+                                       Style="{StaticResource MaterialDesignOutlinedAutoSuggestBox}" />
 
       </Grid>
     </StackPanel>

@@ -5,6 +5,8 @@ namespace MaterialDesignThemes.Wpf.Converters;
 
 public class TreeListViewIndentConverter : IMultiValueConverter
 {
+    public static readonly TreeListViewIndentConverter Instance = new();
+
     public object? Convert(object?[]? values, Type targetType, object? parameter, CultureInfo culture)
     {
         if (values?.Length == 2 && values[0] is double size && values[1] is int level)
@@ -15,7 +17,5 @@ public class TreeListViewIndentConverter : IMultiValueConverter
     }
 
     public object?[]? ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
+        => throw new NotImplementedException();
 }

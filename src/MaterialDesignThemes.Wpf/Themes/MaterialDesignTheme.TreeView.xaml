@@ -2,16 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters"
                     xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf">
-
-  <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary>
-      <converters:BrushRoundConverter x:Key="BrushRoundConverter" />
-      <converters:MathMultipleConverter x:Key="MathMlpMultipleConverter" Operation="Multiply" />
-      <converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter" />
-    </ResourceDictionary>
-  </ResourceDictionary.MergedDictionaries>
-
-
   <Style x:Key="MaterialDesignTreeView" TargetType="{x:Type TreeView}">
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderBrush" Value="{x:Null}" />
@@ -31,6 +21,8 @@
             <ScrollViewer x:Name="_tv_scrollviewer_"
                           Padding="{TemplateBinding Padding}"
                           Background="{TemplateBinding Background}"
+                          wpf:ScrollViewerAssist.IgnorePadding="{Binding Path=(wpf:ScrollViewerAssist.IgnorePadding), RelativeSource={RelativeSource TemplatedParent}}"
+                          wpf:ScrollViewerAssist.PaddingMode="{Binding Path=(wpf:ScrollViewerAssist.PaddingMode), RelativeSource={RelativeSource TemplatedParent}}"
                           CanContentScroll="false"
                           Focusable="false"
                           HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
@@ -173,8 +165,8 @@
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="FocusVisualStyle" Value="{StaticResource MaterialDesignTreeViewItemFocusVisual}" />
-    <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}}" />
-    <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+    <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type TreeView}}, FallbackValue=Black}" />
+    <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, FallbackValue=Left}" />
     <Setter Property="Padding" Value="8" />
     <Setter Property="Template">
       <Setter.Value>
@@ -313,14 +305,14 @@
             <Border x:Name="MouseOverBorder"
                     Grid.Column="1"
                     Grid.ColumnSpan="2"
-                    Background="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}"
+                    Background="{TemplateBinding Foreground, Converter={x:Static converters:BrushRoundConverter.Instance}}"
                     IsHitTestVisible="False"
                     Opacity="0" />
 
             <Border x:Name="SelectedBorder"
                     Grid.Column="1"
                     Grid.ColumnSpan="2"
-                    Background="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}"
+                    Background="{TemplateBinding Foreground, Converter={x:Static converters:BrushRoundConverter.Instance}}"
                     IsHitTestVisible="False"
                     Opacity="0" />
 
@@ -332,7 +324,7 @@
                           Padding="{TemplateBinding Padding}"
                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                          Feedback="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}"
+                          Feedback="{TemplateBinding Foreground, Converter={x:Static converters:BrushRoundConverter.Instance}}"
                           Focusable="False"
                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                 <ContentPresenter x:Name="PART_Header" ContentSource="Header" />
@@ -354,7 +346,7 @@
                         Grid.ColumnSpan="2"
                         Margin="-16,0,0,0">
               <StackPanel.Height>
-                <MultiBinding Converter="{StaticResource MathMlpMultipleConverter}">
+                <MultiBinding Converter="{x:Static converters:MathMultipleConverter.MultiplyInstance}">
                   <Binding ElementName="ItemsHost" Path="ActualHeight" />
                   <Binding ElementName="ScaleHost" Path="Scale" />
                 </MultiBinding>
@@ -366,10 +358,10 @@
             </StackPanel>
           </Grid>
           <ControlTemplate.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(wpf:TreeViewAssist.AdditionalTemplate), Converter={StaticResource NullableToVisibilityConverter}, Mode=OneWay}" Value="Visible">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(wpf:TreeViewAssist.AdditionalTemplate), Converter={x:Static converters:NullableToVisibilityConverter.CollapsedInstance}, Mode=OneWay}" Value="Visible">
               <Setter TargetName="AdditionalContentControl" Property="Visibility" Value="Visible" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(wpf:TreeViewAssist.AdditionalTemplateSelector), Converter={StaticResource NullableToVisibilityConverter}, Mode=OneWay}" Value="Visible">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(wpf:TreeViewAssist.AdditionalTemplateSelector), Converter={x:Static converters:NullableToVisibilityConverter.CollapsedInstance}, Mode=OneWay}" Value="Visible">
               <Setter TargetName="AdditionalContentControl" Property="Visibility" Value="Visible" />
             </DataTrigger>
             <Trigger Property="HasItems" Value="false">
@@ -387,7 +379,7 @@
         </ControlTemplate>
       </Setter.Value>
     </Setter>
-    <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+    <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, FallbackValue=Center}" />
     <Setter Property="wpf:TreeViewAssist.ExpanderSize" Value="16" />
     <Setter Property="wpf:TreeViewAssist.HasNoItemsExpanderVisibility" Value="{Binding RelativeSource={RelativeSource AncestorType=TreeView}, Path=(wpf:TreeViewAssist.HasNoItemsExpanderVisibility)}" />
     <Setter Property="wpf:TreeViewAssist.ShowSelection" Value="True" />

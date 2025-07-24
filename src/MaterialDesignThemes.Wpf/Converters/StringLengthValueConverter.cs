@@ -3,8 +3,10 @@ using System.Windows.Data;
 
 namespace MaterialDesignThemes.Wpf.Converters;
 
-internal class StringLengthValueConverter : IValueConverter
+public class StringLengthValueConverter : IValueConverter
 {
+    public static readonly StringLengthValueConverter Instance = new();
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is string stringValue)

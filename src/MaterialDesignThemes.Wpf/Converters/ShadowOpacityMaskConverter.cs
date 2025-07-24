@@ -7,6 +7,8 @@ namespace MaterialDesignThemes.Wpf.Converters;
 
 public class ShadowOpacityMaskConverter : IMultiValueConverter
 {
+    public static readonly ShadowOpacityMaskConverter Instance = new();
+
     public object? Convert(object[]? values, Type targetType, object? parameter, CultureInfo culture)
     {
         static double? GetValidSize(object? value)
@@ -29,7 +31,7 @@ public class ShadowOpacityMaskConverter : IMultiValueConverter
 
         double blurRadius = dropShadow.BlurRadius;
 
-        Rect rect = new Rect(
+        var rect = new Rect(
                 -blurRadius,
                 -blurRadius,
                 width + blurRadius + blurRadius,

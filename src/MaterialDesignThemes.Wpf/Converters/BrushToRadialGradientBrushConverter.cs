@@ -6,10 +6,10 @@ namespace MaterialDesignThemes.Wpf.Converters;
 
 public class BrushToRadialGradientBrushConverter : IValueConverter
 {
+    public static readonly BrushToRadialGradientBrushConverter Instance = new();
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var solidColorBrush = value as SolidColorBrush;
-        if (solidColorBrush == null) return Binding.DoNothing;
+        if (value is not SolidColorBrush solidColorBrush) return Binding.DoNothing;
 
         return new RadialGradientBrush(solidColorBrush.Color, Colors.Transparent)
         {
@@ -22,7 +22,5 @@ public class BrushToRadialGradientBrushConverter : IValueConverter
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return Binding.DoNothing;
-    }
+        => Binding.DoNothing;
 }

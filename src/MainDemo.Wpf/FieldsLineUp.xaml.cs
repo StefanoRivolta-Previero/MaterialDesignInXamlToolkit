@@ -52,6 +52,8 @@ public partial class FieldsLineUp
             control.Margin = new Thickness(2, 10, 2, 10);
             if (control is ComboBox comboBox)
                 comboBox.SetBinding(ComboBox.IsEditableProperty, new Binding(nameof(CheckBox.IsChecked)) { ElementName = nameof(IsEditableCheckBox) });
+            if (control is TextBoxBase tb)
+                tb.SetBinding(TextBoxBase.IsReadOnlyProperty, new Binding(nameof(CheckBox.IsChecked)) { ElementName = nameof(IsReadOnlyCheckBox) });
             SetValue(control);
         }
     }
@@ -73,6 +75,9 @@ public partial class FieldsLineUp
     {
         switch (control)
         {
+            case MaterialDesignThemes.Wpf.AutoSuggestBox autoSuggestBox:
+                autoSuggestBox.Text = nameof(MaterialDesignThemes.Wpf.AutoSuggestBox.Text);
+                break;
             case TextBox textBox:
                 textBox.Text = nameof(TextBox.Text);
                 break;
@@ -89,6 +94,9 @@ public partial class FieldsLineUp
                 break;
             case TimePicker timePicker:
                 timePicker.SelectedTime = DateTime.Now;
+                break;
+            case MaterialDesignThemes.Wpf.NumericUpDown numericUpDown:
+                numericUpDown.Value = 0;
                 break;
             default:
                 throw new NotSupportedException(control.GetType().FullName);

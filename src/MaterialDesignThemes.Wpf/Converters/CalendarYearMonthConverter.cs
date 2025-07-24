@@ -5,10 +5,12 @@ namespace MaterialDesignThemes.Wpf.Converters;
 
 public sealed class CalendarYearMonthConverter : IMultiValueConverter
 {
+    public static readonly CalendarYearMonthConverter Instance = new();
+
     public object? Convert(object?[]? values, Type targetType, object? parameter, CultureInfo culture)
     {
         long ticks = long.MaxValue;
-        foreach (var value in values ?? Enumerable.Empty<object?>())
+        foreach (object? value in values ?? Enumerable.Empty<object?>())
         {
             if (value is DateTime dt)
                 ticks = dt.Ticks;

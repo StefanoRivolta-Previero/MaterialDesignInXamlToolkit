@@ -16,9 +16,6 @@
     <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ListBox.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
-  <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-  <converters:ToolBarOverflowButtonVisibilityConverter x:Key="ToolBarOverflowButtonVisibilityConverter" />
-
   <Style x:Key="MaterialDesignToolBarVerticalOverflowButtonStyle" TargetType="{x:Type ToggleButton}">
     <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.ToolBar.Background}" />
     <Setter Property="MinHeight" Value="0" />
@@ -173,7 +170,7 @@
                             IsChecked="{Binding IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                             Style="{StaticResource MaterialDesignToolBarHorizontalOverflowButtonStyle}">
                 <ToggleButton.Visibility>
-                  <MultiBinding Converter="{StaticResource ToolBarOverflowButtonVisibilityConverter}">
+                  <MultiBinding Converter="{x:Static converters:ToolBarOverflowButtonVisibilityConverter.Instance}">
                     <Binding Path="OverflowMode" RelativeSource="{RelativeSource TemplatedParent}" />
                     <Binding Path="HasOverflowItems" RelativeSource="{RelativeSource TemplatedParent}" />
                   </MultiBinding>
@@ -186,11 +183,8 @@
                      IsOpen="{Binding IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}"
                      Placement="Bottom"
                      PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
-                     StaysOpen="false">
-                <!-- warning, this will cache the inner item as well, consider separating the shadow from the item if possible -->
-                <Popup.CacheMode>
-                  <BitmapCache EnableClearType="True" SnapsToDevicePixels="True" />
-                </Popup.CacheMode>
+                     StaysOpen="false"
+                     CacheMode="{Binding RelativeSource={RelativeSource Self}, Path=(wpf:ShadowAssist.CacheMode)}">
                 <Border x:Name="ToolBarSubMenuBorder"
                         Margin="1"
                         Background="{DynamicResource MaterialDesign.Brush.ToolBar.Background}"

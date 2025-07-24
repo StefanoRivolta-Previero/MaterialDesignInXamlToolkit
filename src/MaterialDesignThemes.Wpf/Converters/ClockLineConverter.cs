@@ -5,6 +5,10 @@ namespace MaterialDesignThemes.Wpf.Converters;
 
 public class ClockLineConverter : MarkupExtension, IValueConverter
 {
+    public static readonly ClockLineConverter HoursInstance = new() { DisplayMode = ClockDisplayMode.Hours };
+    public static readonly ClockLineConverter MinutesInstance = new() { DisplayMode = ClockDisplayMode.Minutes };
+    public static readonly ClockLineConverter SecondsInstance = new() { DisplayMode = ClockDisplayMode.Seconds };
+
     public ClockDisplayMode DisplayMode { get; set; }
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -19,12 +23,8 @@ public class ClockLineConverter : MarkupExtension, IValueConverter
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return Binding.DoNothing;
-    }
+        => Binding.DoNothing;
 
     public override object ProvideValue(IServiceProvider serviceProvider)
-    {
-        return this;
-    }
+        => this;
 }
